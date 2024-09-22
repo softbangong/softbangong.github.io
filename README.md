@@ -1,6 +1,6 @@
 # 1、公众号链接
 
-| <img src="https://s21.ax1x.com/2024/09/21/pAMUJje.png" style="zoom: 50%;" /> | ![](https://s21.ax1x.com/2024/09/21/pAMUQtx.png) |
+ ![image ](imags/image0280ff3f68640dae.png)
 
 # 2、作者介绍
 
