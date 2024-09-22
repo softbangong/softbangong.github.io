@@ -1,6 +1,6 @@
 # 1、公众号链接
 
-  ![image](imags/image0280ff3f68640dae.png)
+![image](https://img.picgo.net/2024/09/22/image0280ff3f68640dae.png)
 
 # 2、作者介绍
 
