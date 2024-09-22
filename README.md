@@ -1,6 +1,6 @@
 # 1、公众号链接
 
-![image](https://img.picgo.net/2024/09/22/image0280ff3f68640dae.png)
+ ![image ](imags/image0280ff3f68640dae.png)
 
 # 2、作者介绍
 
@@ -8,15 +8,11 @@
 
 mac/win 系统批处理程序定制开发请扫描上边二维码联系
 
-## 更多介绍：点击下方链了解更多
+# 3、更多项目
 
-https://tutnt6sium.feishu.cn/wiki/OtFfwz2DJigfhwklmXscvvzHnKe?from=from_copylink
+**[点击链接查看更多项目](https://tutnt6sium.feishu.cn/wiki/OtFfwz2DJigfhwklmXscvvzHnKe?from=from_copylink)**
 
-
-
-
-
-# 3、更多渠道了解
+# 4、更多渠道了解
 
 ## 哔哩哔哩视频演示
 
