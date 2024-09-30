@@ -18,30 +18,35 @@ jobs:
     - name: Install unzip
       run: sudo apt-get install -y unzip
 
-    # Step 3: 解压文件到根目录
+    # Step 3: 列出所有文件，确认 .zip 文件是否存在
+    - name: List files in repository
+      run: ls -lah
+
+    # Step 4: 解压文件到根目录
     - name: Unzip files to root
       run: |
         for file in *.zip; do
+          echo "Unzipping $file"
           unzip -o "$file" -d ./
         done
 
-    # Step 4: 配置 Git 用户名和邮箱
+    # Step 5: 配置 Git 用户名和邮箱
     - name: Setup Git config
       run: |
         git config --global user.name "softbangong"
         git config --global user.email "yunjuliangpin@163.com"
 
-    # Step 5: 添加解压后的文件到 Git 暂存区
+    # Step 6: 添加解压后的文件到 Git 暂存区
     - name: Add unzipped files
       run: |
         git add .
     
-    # Step 6: 提交解压后的文件到 GitHub
+    # Step 7: 提交解压后的文件到 GitHub
     - name: Commit files
       run: |
         git commit -m "Auto-unzipped files"
 
-    # Step 7: 推送提交到远程仓库
+    # Step 8: 推送提交到远程仓库
     - name: Push changes
       run: |
         git push
