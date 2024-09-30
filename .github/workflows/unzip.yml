@@ -14,33 +14,35 @@ jobs:
     - name: Checkout repository content
       uses: actions/checkout@v2
 
-    # Step 2: 安装解压工具（Ubuntu 系统下的 unzip）
+    # Step 2: 安装解压工具
     - name: Install unzip
       run: sudo apt-get install -y unzip
 
-    # Step 3: 列出所有文件，确认 .zip 文件是否存在
-    - name: List files in repository
-      run: ls -lah
-
-    # Step 4: 解压文件到根目录
+    # Step 3: 解压文件到根目录
     - name: Unzip files to root
       run: |
         for file in *.zip; do
-          echo "Unzipping $file"
           unzip -o "$file" -d ./
         done
 
-    # Step 5: 配置 Git 用户名和邮箱
+    # Step 4: 配置 Git 用户名和邮箱
     - name: Setup Git config
       run: |
         git config --global user.name "softbangong"
         git config --global user.email "yunjuliangpin@163.com"
 
+    # Step 5: 拉取远程仓库最新更改
+    - name: Pull latest changes from remote
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/softbangong/softbangong.github.io.git main --rebase
+
     # Step 6: 添加解压后的文件到 Git 暂存区
     - name: Add unzipped files
       run: |
         git add .
-    
+
     # Step 7: 提交解压后的文件到 GitHub
     - name: Commit files
       run: |
@@ -48,5 +50,7 @@ jobs:
 
     # Step 8: 推送提交到远程仓库
     - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git push
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/softbangong/softbangong.github.io.git main
