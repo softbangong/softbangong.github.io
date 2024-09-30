@@ -7,7 +7,6 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="/assets/css/vue.css">
- 
   
   <script>
       var _hmt = _hmt || [];
@@ -20,20 +19,27 @@
   </script>
   
   <script src="/assets/js/backtop/docsify-backTop.min.js"></script>
+  <link rel="stylesheet" href="/assets/js/mulu/dist/toc.css">
 </head>
 
 <body>
 
 <div id="app"></div>
-<script>	
+<script>
     window.$docsify = {
       name: '极致办公 | 极致',
       repo: 'https://docsify.js.org/#/zh-cn/deploy',
       auto2top: true,
       coverpage: true,
+      onlyCover: true,  // 首页只显示封面，不显示正文
       loadSidebar: true,
       maxLevel: 5,
       subMaxLevel: 5,
+	  toc: {
+		scope: '.markdown-section',
+		headings: 'h1, h2, h3, h4, h5, h6',
+		title: 'Table of Contents',
+		  },
       search: {
         paths: 'auto',
         placeholder: '🔍 搜索本站内容 ',
@@ -45,33 +51,46 @@
         nextText: 'NEXT',
         crossChapter: true
       },
-	  <!-- 页脚 -->
-	   basePath: '.',        
-        footer: {
-          copy: '<span>极致办公  解放你的双手</span>',
-          auth: 'by 极致办公',
-          pre: '<hr/>',
-          style: 'text-align: center;',
-        },
-    }                                 
-  </script>
-  
+      basePath: '.',
+      footer: {
+        copy: '<span>极致办公  解放你的双手</span>',
+        auth: 'by 极致办公',
+        pre: '<hr/>',
+        style: 'text-align: center;',
+      },
+      doneEach: function() {
+        // 遍历所有链接，添加 target="_blank"
+        var links = document.querySelectorAll('a');
+        links.forEach(function(link) {
+          link.setAttribute('target', '_blank');  // 所有链接在新窗口打开
+        });
+      },
+      router: {
+        afterEach: function() {
+          requestAnimationFrame(function() {
+            // 路由切换后执行操作
+          });
+        }
+      }
+    };
+</script>
+<script src="/assets/js/mulu/dist/toc.js"></script>
 
-<script src="/assets/js/md5.js"></script>
 <script src="/assets/js/docsify.min.js"></script>
 <script src="/assets/js/search.js"></script>
 <script src="/assets/js/docsify-pagination.min.js"></script>
 <script src="/assets/js/zoom-image.js"></script>
 <script src="/assets/js/prism-bash.js"></script>
 <script src="/assets/js/backtop/prism-java.min.js"></script>
-    <script>
-        docsifyBackTop = {
-            // 该处配置自定义配置参数，不需要自定义的不要写入，示例如下
-            logo: '🔝',
-            bgColor: '\#2096ff'
-        }
-    </script>
-	
 <script src="/assets/js/docsify-footer-enh.js"></script>
+
+<script>
+    docsifyBackTop = {
+        // 该处配置自定义配置参数，不需要自定义的不要写入，示例如下
+        logo: '🔝',
+        bgColor: '#2096ff'
+    }
+</script>
+
 </body>
 </html>
