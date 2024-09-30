@@ -27,12 +27,12 @@ Csdn
 https://passport.csdn.net/login?code=applets
 
 ## 三、各种批处理程序定制！
-bat批处理
-
-python批处理
-
-win系统问题
-
-mac系统问题
-
-win / mac 批处理定制
+### 1. 音频批处理
+### 2. 视频批处理
+### 3. 图片批处理
+### 4. txt批处理
+### 5. PDF批处理
+### 6. EXCEL批处理
+### 7. PPT批处理
+### 8. WORD批处理
+### 9. 文件及文件夹批处理
