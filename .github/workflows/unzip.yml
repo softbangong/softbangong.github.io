@@ -1,0 +1,23 @@
+name: Unzip Files
+
+on:
+  push:
+    paths:
+      - '*.zip'
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Unzip files
+        run: |
+          sudo apt-get install unzip
+          unzip your-archive.zip -d ./unzipped_files
+      - name: Commit and push unzipped files
+        run: |
+          git config --global user.name "softbangong"
+          git config --global user.email "yunjuliangpin@163.comm"
+          git add .
+          git commit -m "Auto-unzipped files"
+          git push
