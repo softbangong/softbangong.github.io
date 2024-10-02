@@ -20,6 +20,7 @@
   
   <script src="/assets/js/backtop/docsify-backTop.min.js"></script>
   <link rel="stylesheet" href="/assets/js/mulu/dist/toc.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" /> 
 
 </head>
 
@@ -47,13 +48,19 @@
       onlyCover: true,  // 首页只显示封面，不显示正文
       loadSidebar: true,
       maxLevel: 0,
-      subMaxLevel: 0,
+      subMaxLevel: 0, //最大层级 0表示只显示主文档
 	  mergeNavbar: true, // 导航栏将与较小屏幕上的侧边栏合并 false
 	  nativeEmoji: true,
 	  notFoundPage: false, //显示默认的 “404 - 未找到” 消息：
 	  
+	  //侧边栏折叠配置开始
+	   alias: {
+      '/.*/_sidebar.md': '/_sidebar.md', //侧边栏折叠目录结构
+		},
+	  sidebarDisplayLevel: 1, // 设置显示层级，1为只显示主目录及文档
 	  
-	  
+	   //侧边栏折叠配置结束
+	   
 	  loadSidebar: true, // 启用侧边栏
 	  toc: {
 		scope: '.markdown-section',
@@ -94,8 +101,13 @@
       }
     };
 </script>
-<script src="/assets/js/mulu/dist/toc.js"></script>
 
+
+<!-- plugins侧边栏折叠配置开始 -->
+<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+<!-- plugins侧边栏折叠配置结束 -->
+
+<script src="/assets/js/mulu/dist/toc.js"></script>
 <script src="/assets/js/docsify.min.js"></script>
 <script src="/assets/js/search.js"></script>
 <script src="/assets/js/docsify-pagination.min.js"></script>
