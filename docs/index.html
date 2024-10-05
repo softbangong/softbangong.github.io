@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="/assets/css/vue.css">
   
+  
   <script>
       var _hmt = _hmt || [];
       (function() {
@@ -21,6 +22,38 @@
   <script src="/assets/js/backtop/docsify-backTop.min.js"></script>
   <link rel="stylesheet" href="/assets/js/mulu/dist/toc.css">
   <link rel="stylesheet" href="/assets/css/sidebar-folder.min.css" /> 
+ 
+<!-- 设置左侧边栏文章标题  -->
+ <style>
+    /* 自动换行设置 */
+    .sidebar-nav li a {
+      white-space: normal; /* 使标题自动换行 */
+      word-wrap: break-word; /* 长单词换行 */
+      line-height: 1.5; /* 设置换行后的行间距 */
+      display: block; /* 确保链接是块级元素 */
+      padding: 8px 10px; /* 设置标题的内边距 */
+    }
+
+    /* 奇数标题链接部分的背景颜色 */
+    .sidebar-nav li:nth-of-type(odd) > a {
+      background-color: #FDF9F9; /* 字体背景颜色 */
+	  color: #228B22; /* 设置字体颜色 */
+	  font-weight: bold; /* 设置字体加粗 */
+	  font-size:16px
+    }
+
+    /* 偶数标题链接部分的背景颜色 */
+    .sidebar-nav li:nth-of-type(even) > a {
+      background-color: #FFFFFF; /* 字体背景颜色 */
+	  font-weight: bold; /* 设置字体加粗 */
+	  font-size:16px   /* 设置字体大小 */
+    }
+
+    /* 增加每个标题之间的间距 */
+    .sidebar-nav li {
+      margin-bottom: 50px; /* 调整文章标题之间的间距 */
+    }
+  </style>
 
 </head>
 
