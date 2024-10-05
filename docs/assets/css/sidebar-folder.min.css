@@ -6,7 +6,8 @@
 	position: relative;
 	margin: 0;
 	cursor: pointer;
-	margin-left: 4px
+	margin-left: 4px;
+	margin-right: 4px
 }
 
 .sidebar-nav ul:not(.app-sub-sidebar)>li::before {
