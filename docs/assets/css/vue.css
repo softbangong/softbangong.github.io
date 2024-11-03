@@ -771,7 +771,7 @@ section.cover blockquote>p>a:hover {
 .markdown-section blockquote {
 	border-left: 4px solid var(--theme-color,#42b983);
 	color: #858585;
-	margin: 2em 0;
+	margin: 0.6em 0;
 	padding-left: 20px
 }
 
