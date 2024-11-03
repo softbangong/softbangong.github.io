@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="/assets/css/vue.css">
   
-  
   <script>
       var _hmt = _hmt || [];
       (function() {
@@ -39,14 +38,14 @@
       background-color: #FDF9F9; /* 字体背景颜色 */
 	  color: #228B22; /* 设置字体颜色 */
 	  font-weight: bold; /* 设置字体加粗 */
-	  font-size:16px
+	  font-size:16px;
     }
 
     /* 偶数标题链接部分的背景颜色 */
     .sidebar-nav li:nth-of-type(even) > a {
       background-color: #FFFFFF; /* 字体背景颜色 */
 	  font-weight: bold; /* 设置字体加粗 */
-	  font-size:16px   /* 设置字体大小 */
+	  font-size:16px;  /* 设置字体大小 */
     }
 
     /* 增加每个标题之间的间距 */
@@ -64,42 +63,31 @@
     window.$docsify = {
       name: '极致办公 | 极致',
 	  nameLink: '/#/README', // 标题链接
-      repo: 'https://docsify.js.org/#/zh-cn/deploy',
+      repo: '#',
 	  
-	  //基本路径
-	  //basePath: '/path/',
-
-	  //设置为指定域名
-	  //basePath: 'https://docsify.js.org/',
-
-	  // 设置为其他目录
-	  //basePath:
-	  //'https://raw.githubusercontent.com/ryanmcdermott/clean-code-javascript/master/',
-	  
-      auto2top: true, //切换页面后是否自动跳转到页面顶部
-      coverpage: true,
+      auto2top: true, // 切换页面后是否自动跳转到页面顶部
+      coverpage: false,
       onlyCover: true,  // 首页只显示封面，不显示正文
       loadSidebar: true,
       maxLevel: 0,
-      subMaxLevel: 0, //最大层级 0表示只显示主文档
+      subMaxLevel: 0, // 最大层级 0表示只显示主文档
 	  mergeNavbar: true, // 导航栏将与较小屏幕上的侧边栏合并 false
 	  nativeEmoji: true,
-	  notFoundPage: false, //显示默认的 “404 - 未找到” 消息：
+	  notFoundPage: false, // 显示默认的 “404 - 未找到” 消息
 	  
-	  //侧边栏折叠配置开始
+	  // 侧边栏折叠配置
 	   alias: {
-      '/.*/_sidebar.md': '/_sidebar.md', //侧边栏折叠目录结构
+      '/.*/_sidebar.md': '/_sidebar.md', // 侧边栏折叠目录结构
 		},
 	  sidebarDisplayLevel: 1, // 设置显示层级，1为只显示主目录及文档
-	  
-	   //侧边栏折叠配置结束
 	   
 	  loadSidebar: true, // 启用侧边栏
+	  
 	  toc: {
 		scope: '.markdown-section',
 		headings: 'h1, h2, h3, h4, h5, h6',
 		title: '【目录导航】',
-		  },
+	  },
       search: {
         paths: 'auto',
         placeholder: '🔍 输入关键词搜索本站内容 ',
@@ -118,23 +106,20 @@
         pre: '<hr/>',
         style: 'text-align: center;',
       },
-      doneEach: function() {
-        // 遍历所有链接，添加 target="_blank"
-        var links = document.querySelectorAll('a');
-        links.forEach(function(link) {
-          link.setAttribute('target', '_blank');  // 所有链接在新窗口打开
-        });
-      },
+	  
       router: {
         afterEach: function() {
-          requestAnimationFrame(function() {
-            // 路由切换后执行操作
+          // 遍历所有 Markdown 中的链接，添加 target="_blank"
+          var links = document.querySelectorAll('.markdown-section a');
+          links.forEach(function(link) {
+            if (!link.hasAttribute('target')) {
+              link.setAttribute('target', '_blank');  // 设置链接在新窗口打开
+            }
           });
         }
       }
     };
 </script>
-
 
 <!-- plugins侧边栏折叠配置开始 -->
 <script src="/assets/js/docsify-sidebar-collapse.min.js"></script>
@@ -151,7 +136,7 @@
 
 <script>
     docsifyBackTop = {
-        // 该处配置自定义配置参数，不需要自定义的不要写入，示例如下
+        // 自定义配置参数
         logo: '🔝',
         bgColor: '#2096ff'
     }
