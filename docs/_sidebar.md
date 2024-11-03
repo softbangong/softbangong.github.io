@@ -1,6 +1,4 @@
--  [:octocat: 首页](/README.md)
--  :memo: 项目目录
-
+  -  [:octocat: 首页](/README.md)
   - [00-在线印刷](/sidebar/00-在线印刷.md)
   - [01-PDF批处理](/sidebar/01-PDF批处理.md)
   - [02-EXCEL批处理](/sidebar/02-EXCEL批处理.md)
