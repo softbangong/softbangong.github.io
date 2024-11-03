@@ -723,8 +723,9 @@ section.cover blockquote>p>a:hover {
 }
 
 .markdown-section a {
-	color: var(--theme-color,#42b983);
-	font-weight: 600
+	color: var(--theme-color,#616262);
+	font-weight: 550;
+	text-decoration: none
 }
 
 .markdown-section h1 {
@@ -760,7 +761,7 @@ section.cover blockquote>p>a:hover {
 }
 
 .markdown-section ol,.markdown-section p,.markdown-section ul {
-	line-height: 1.6rem;
+	line-height: 2rem;
 	word-spacing: .05rem
 }
 
