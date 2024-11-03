@@ -359,7 +359,7 @@ body.sticky .sidebar,body.sticky .sidebar-toggle {
 
 .markdown-section>* {
 	box-sizing: border-box;
-	font-size: inherit
+	font-size: 16px
 }
 
 .markdown-section>:first-child {
@@ -756,7 +756,7 @@ section.cover blockquote>p>a:hover {
 }
 
 .markdown-section figure,.markdown-section p {
-	margin: 1.2em 0
+	margin: 0.5em 0
 }
 
 .markdown-section ol,.markdown-section p,.markdown-section ul {
