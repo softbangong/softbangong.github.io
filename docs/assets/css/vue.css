@@ -726,6 +726,7 @@ section.cover blockquote>p>a:hover {
 	color: var(--theme-color,#616262);
 	font-weight: 550;
 	text-decoration: none
+	
 }
 
 .markdown-section h1 {
