@@ -691,7 +691,7 @@ section.cover blockquote>p>a:hover {
 .sidebar ul li a {
 	color: #505d6b;
 	font-size: 15px;
-	font-weight: 400;
+	/* font-weight: 400; */
 	overflow: hidden;
 	text-decoration: none;
 	text-overflow: ellipsis/* ;white-space:nowrap */
@@ -707,7 +707,7 @@ section.cover blockquote>p>a:hover {
 
 .sidebar ul li.active>a {
 	border-right: 2px solid;
-	color: var(--theme-color,#42b983);
+	color: var(--theme-color,#ab2828);
 	font-weight: 600
 }
 

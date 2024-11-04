@@ -31,9 +31,9 @@
         .sidebar-nav li a {
             white-space: normal; 
             word-wrap: break-word; 
-            line-height: 1.2; 
+            line-height: 1.5; 
             display: block; 
-            padding: 8px 10px; 
+            padding: 8px 1px; 
         }
         
         /* 奇数标题链接的背景颜色 */
@@ -93,15 +93,16 @@
             coverpage: false,
             onlyCover: true,  // 首页只显示封面
             loadSidebar: true, // 启用侧边栏
-            maxLevel: 0,  // 最大显示层级
-            subMaxLevel: 0,
+            <!-- maxLevel: 1,  // 最大显示层级 -->
+            <!-- subMaxLevel:1, -->
             mergeNavbar: true,  // 导航栏在小屏幕上合并
             nativeEmoji: true,
             notFoundPage: false, //显示默认的 “404 - 未找到” 消息：
-            alias: {
-                '/.*/_sidebar.md': '/_sidebar.md',  // 侧边栏配置
-            },
+            <!-- alias: { -->
+            <!--     '/.*/_sidebar.md': '/_sidebar.md',  // 侧边栏配置 -->
+            <!-- }, -->
             sidebarDisplayLevel: 1,  // 侧边栏显示层级
+			
             toc: {
                 scope: '.markdown-section',
                 headings: 'h1, h2, h3, h4, h5, h6',
