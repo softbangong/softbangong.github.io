@@ -320,7 +320,7 @@ main.hidden {
 	left: 0;
 	text-align: center;
 	transition: opacity .3s;
-	width: 5px;
+	width: 30px;
 	z-index: 30
 }
 
