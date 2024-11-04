@@ -78,6 +78,20 @@
             background-color: #E0E0E0; 
             color: #000; 
         }
+		
+		 /* 移动端侧边栏样式 */
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%); /* 默认隐藏侧边栏 */
+      transition: transform 0.3s ease;
+    }
+    .sidebar.open {
+      transform: translateX(0); /* 打开侧边栏 */
+    }
+    .content {
+      overflow-x: hidden; /* 避免内容区域偏移 */
+    }
+  }
     </style>
 </head>
 
@@ -163,26 +177,6 @@
             bgColor: '#2096ff'  // 返回顶部按钮的背景颜色
         };
     </script>
-	<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const sidebar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
-
-    // 当点击内容区域时隐藏侧边栏
-    content.addEventListener('click', function () {
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-      }
-    });
-
-    // 监听 Docsify 的路由变化，自动收起侧边栏
-    window.addEventListener('hashchange', function () {
-      if (sidebar.classList.contains('open')) {
-        sidebar.classList.remove('open');
-      }
-    });
-  });
-</script>
-
+	
 </body>
 </html>
