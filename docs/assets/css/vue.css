@@ -359,7 +359,7 @@ body.sticky .sidebar,body.sticky .sidebar-toggle {
 
 .markdown-section>* {
 	box-sizing: border-box;
-	font-size: 12px
+	font-size: 16px
 }
 
 .markdown-section>:first-child {
