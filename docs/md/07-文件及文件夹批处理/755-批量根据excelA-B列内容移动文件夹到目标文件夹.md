@@ -4,7 +4,11 @@
 
 将A列中的文件夹移动到对应的B列中的文件夹内
 
-（需要注意同名文件夹问题，避免覆盖）
+
+
+**excell文件建议使用格式：xlsx**
+
+**注意事项：**需要注意同名文件夹问题，避免覆盖
 
 
 
@@ -20,11 +24,13 @@
 
 假设Excel文件中A列有文件夹名E、F、D...等，B列有对应的目标文件夹名X、Y、Z等，
 
-而文件夹A路径设置为"C:\SourceFolders"，文件夹B路径设置为"D:\TargetFolders"。
+而文件夹A路径设置为"源文件夹总路径"，文件夹B路径设置为"目标文件夹总路径"。
 
-运行程序后，程序会尝试将C:\SourceFolders下的E、F、D文件夹分别移动或复制到D:\TargetFolders下的X、Y、Z文件夹内。
+运行程序后，程序会尝试将源文件夹下的E、F、D文件夹分别移动或复制到目标文件夹下的X、Y、Z文件夹内。
 
-如果在C:\SourceFolders下的E文件无法移动或复制到D:\TargetFolders下的X文件夹，则程序会在Excel文件中标记此问题。
+
+
+如果在源文件夹下的E文件无法移动或复制到目标文件夹下的X文件夹，则程序会在Excel文件中标记此问题。
 
 ### 📑 程序使用环境及相关说明
 
@@ -38,11 +44,12 @@
 > **特别注意 - 特别声明**：请先测试，注意备份原文件，避免不可逆损失，之后再批量使用
 
 ### 📑 程序截图
- ![image-20241016104251906](https://s2.loli.net/2024/10/16/wWmRdbMGTZyHj7O.png)
+
+![image-20241109183501115](https://s2.loli.net/2024/11/09/MVvtIozW6CJsOr2.png)
 
 ### 📑 视频演示
 
-<iframe src="#"  width=50% height=80% > </iframe> 
+https://www.bilibili.com/video/BV1yXDBYUEoE/
 
 ### 📑 win/mac程序定制说明
 
