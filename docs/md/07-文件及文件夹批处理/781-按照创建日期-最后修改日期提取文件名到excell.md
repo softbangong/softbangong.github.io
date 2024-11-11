@@ -1,10 +1,10 @@
 ## 781-按照创建日期-最后修改日期提取文件名到excell
 
+批量以文件创建日期或最后修改日期提取文件名到excell文件中，如下图所示：
+
 【1】、支持的文件格式：所有
 
 【2】、是否支持子文件夹穿透：支持  
-
-批量以文件创建日期或最后修改日期提取文件名到excell文件中，如下图所示：
 
 ![image-20241027093655538.png](https://s2.loli.net/2024/11/01/dxkSJDvbKPuI3Hh.png)
 
@@ -30,7 +30,7 @@ A文件夹下有很多文件，同时有B、C、D....等文件夹，B、C、D...
 
 ### 📑 视频演示
 
-<iframe src="#"  width=50% height=80% > </iframe> 
+https://www.bilibili.com/video/BV1YUmUYHE24/
 
 ### 📑 win/mac程序定制说明
 
