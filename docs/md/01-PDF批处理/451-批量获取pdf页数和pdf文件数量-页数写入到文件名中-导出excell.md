@@ -22,7 +22,7 @@ A文件夹下有PDF文件，同时有B、C、D....等文件夹，B、C、D....�
 
 并输出excell文件将结果存入，保存到程序所在文件夹下
 
-![image-20241207110722844](../../imags/image-20241207110722844.png)
+![image-20241207110722844](https://s2.loli.net/2024/12/12/u3wgWmvPjK72lVt.png)
 
 ### 📑 程序使用环境及相关说明
 
@@ -37,7 +37,7 @@ A文件夹下有PDF文件，同时有B、C、D....等文件夹，B、C、D....�
 
 ### 📑 程序截图
 
-![image-20241207110517615](../../imags/image-20241207110517615.png)
+![image-20241207110517615](https://s2.loli.net/2024/12/12/H8btySEwXZ745MB.png)
 
 ### 📑 视频演示
 
@@ -62,6 +62,8 @@ https://www.bilibili.com/video/BV1R4i1YUESg/
 ### 📑 本工具下载地址
 
 **下载地址：**
+
+http://www.softbangong.top/?id=26
 
 ------
 

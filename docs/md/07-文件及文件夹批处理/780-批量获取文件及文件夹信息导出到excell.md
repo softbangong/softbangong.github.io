@@ -62,6 +62,8 @@ https://www.bilibili.com/video/BV1ZzmUY4EAi/
 
 **下载地址：**
 
+http://www.softbangong.top/?id=98
+
 ------
 
 ### 📑 友情提示

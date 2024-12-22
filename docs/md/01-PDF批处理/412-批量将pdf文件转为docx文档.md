@@ -56,6 +56,8 @@ https://www.bilibili.com/video/BV1cpm9YyELQ/
 
 **下载地址：**
 
+http://www.softbangong.top/?id=16
+
 ------
 
 使用过程中如果有什么问题、新需求添加、新程序定制等，请添加微信沟通：reset201901

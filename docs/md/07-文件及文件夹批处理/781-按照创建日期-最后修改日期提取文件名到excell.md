@@ -50,6 +50,8 @@ https://www.bilibili.com/video/BV1YUmUYHE24/
 
 **下载地址：**
 
+http://www.softbangong.top/?id=99
+
 ------
 
 ### 📑 友情提示
