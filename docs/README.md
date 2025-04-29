@@ -4,7 +4,7 @@
 
 非我们提供的程序，咨询需要红包哦！
 
-
+**程序下载地址：https://www.softbangong.top/**
 
 添加微信，开始咨询！！！
 
@@ -21,10 +21,6 @@
 **微信公众号**：https://img.picgo.net/2024/09/22/image0280ff3f68640dae.png
 
 **博客园**：https://www.cnblogs.com/softbangong
-
-**CSDN博客**：https://blog.csdn.net/weixin_45570346
-
-**淘宝店铺：**https://shop430381783.taobao.com
 
 ### 🔨在线工具
 
