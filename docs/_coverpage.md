@@ -1,6 +1,6 @@
 <img src="https://www.softbangong.top/zb_users/upload/2025/03/202503041741103691385410.svg" alt="logo" style="zoom:150%;" />
 
-# 极致办公 | 批处理办公
+# SOFT办公 | softbangong
 
 ## 用最短的时间完成繁杂的工作，提升工作效率
 
