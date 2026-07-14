@@ -79,7 +79,7 @@
             color: #000; 
         }
 		
-		 /* 移动端侧边栏样式 */
+		/* 移动端侧边栏样式 */
   @media (max-width: 768px) {
     .sidebar {
       transform: translateX(-100%); /* 默认隐藏侧边栏 */
@@ -90,8 +90,187 @@
     }
     .content {
       overflow-x: hidden; /* 避免内容区域偏移 */
+      left: 0 !important;
     }
   }
+		
+        /* 小屏幕点击右侧内容区自动折叠侧边栏 */
+        @media (max-width: 768px) {
+            body:not(.close) .content {
+                cursor: pointer;
+            }
+        }
+		
+        /* 目录导航顶部间距 */
+        .page_toc {
+            margin-top: 24px !important;
+        }
+        /* 小屏下目录导航宽度自适应 */
+        @media screen and (max-width: 1300px) {
+            .nav {
+                width: 100% !important;
+            }
+        }
+
+        /* 左侧菜单不要太宽 */
+        .sidebar {
+            width: 260px !important;
+        }
+        .content {
+            left: 260px !important;
+        }
+        body.close .content {
+            left: 0 !important;
+        }
+
+        /* 右侧内容区居中对齐，撑满区域 */
+        .markdown-section {
+            padding: 30px 30px 40px !important;
+        }
+
+        /* 侧边栏标题上边距 */
+        .sidebar > h1 {
+            margin-top: 30px !important;
+        }
+
+        /* 页脚底部间距 */
+        footer {
+            padding-bottom: 40px !important;
+        }
+
+        /* 返回顶部按钮样式优化 */
+        .backTop {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(32, 150, 255, 0.35);
+            transition: opacity 0.3s, transform 0.3s !important;
+        }
+        .backTop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(32, 150, 255, 0.5);
+        }
+        .backTop svg {
+            display: block;
+        }
+
+        /* PREVIOUS/NEXT 导航区域文本缩小 */
+        .pagination-item-label {
+            font-size: 14px !important;
+        }
+        .pagination-item-title {
+            font-size: 14px !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+        }
+
+        /* 翻页容器允许内容换行 */
+        .docsify-pagination-container {
+            overflow: visible !important;
+            padding: 0 12px !important;
+        }
+        .pagination-item {
+            overflow: visible !important;
+            max-width: 48% !important;
+            min-width: 0 !important;
+        }
+        .pagination-item a {
+            display: block !important;
+        }
+
+        /* 分类页和搜索页隐藏目录导航 */
+        body.no-toc .page_toc {
+            display: none !important;
+        }
+
+        /* 隐藏侧边栏中的搜索框（已改用独立搜索页面） */
+        .search {
+            display: none !important;
+        }
+
+        /* 隐藏侧边栏三层以下的文章链接（视觉扁平，但保留在DOM中供搜索插件索引） */
+        .sidebar-nav > ul > li > ul > li > ul,
+        .sidebar-nav ul ul ul {
+            display: none !important;
+        }
+
+        /* ===== 独立搜索页面样式 ===== */
+        #search-page-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .search-page-input-wrap {
+            display: flex;
+            align-items: center;
+            margin: 10px 0 24px 0;
+        }
+        #search-page-input {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 17px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #search-page-input:focus {
+            border-color: #42b983;
+            box-shadow: 0 0 8px rgba(66, 185, 131, 0.3);
+        }
+        #search-page-count {
+            display: none;
+            color: #999;
+            font-size: 14px;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
+        #search-page-results {
+            min-height: 200px;
+        }
+        .search-page-result {
+            border-bottom: 1px solid #eee;
+            padding: 14px 0;
+        }
+        .search-page-result:last-child {
+            border-bottom: none;
+        }
+        .search-page-result h3 {
+            margin: 0 0 6px 0;
+            font-size: 18px;
+        }
+        .search-page-result h3 a {
+            text-decoration: none;
+            color: #2c3e50;
+        }
+        .search-page-result h3 a:hover {
+            color: #42b983;
+        }
+        .search-page-result p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+        .search-page-result em {
+            font-style: normal;
+            background: #fff3cd;
+            font-weight: bold;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        .search-page-loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 15px;
+        }
+        .search-page-empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 15px;
+        }
     </style>
 </head>
 
@@ -111,12 +290,8 @@
             subMaxLevel:0,
             mergeNavbar: true,  // 导航栏在小屏幕上合并
             nativeEmoji: true,
-            notFoundPage: false, //显示默认的 “404 - 未找到” 消息：
-            <!-- alias: { -->
-            <!--     '/.*/_sidebar.md': '/_sidebar.md',  // 侧边栏配置 -->
-            <!-- }, -->
-            sidebarDisplayLevel: 1,  // 侧边栏显示层级
-			
+            notFoundPage: false, //显示默认的 "404 - 未找到" 消息：
+            
             toc: {
                 scope: '.markdown-section',
                 headings: 'h1, h2, h3, h4, h5, h6',
@@ -144,14 +319,26 @@
             doneEach: function() {
                 var links = document.querySelectorAll('a');
                 links.forEach(function(link) {
-                    link.setAttribute('target', '_blank');  // 所有链接在新窗口打开
+                    link.setAttribute('target', '_blank');
                 });
+                // 侧边栏分类页和搜索页隐藏目录导航（通过 body class 控制，CSS 优先级高于 JS 时序）
+                var hash = window.location.hash;
+                if (hash.indexOf('/sidebar/') !== -1 || hash.indexOf('/md/search') !== -1) {
+                    document.body.classList.add('no-toc');
+                } else {
+                    document.body.classList.remove('no-toc');
+                }
             },
             router: {
-                afterEach: function() {
-                    requestAnimationFrame(function() {
-                        // 路由切换后的操作
-                    });
+                afterEach: function(route) {
+                    requestAnimationFrame(function() {});
+                    // 侧边栏分类页和搜索页隐藏目录导航
+                    var hash = window.location.hash;
+                    if (hash.indexOf('/sidebar/') !== -1 || hash.indexOf('/md/search') !== -1) {
+                        document.body.classList.add('no-toc');
+                    } else {
+                        document.body.classList.remove('no-toc');
+                    }
                 }
             }
         };
@@ -163,8 +350,8 @@
     <script src="/assets/js/mulu/dist/toc.js"></script>
     <script src="/assets/js/docsify.min.js"></script>
     <script src="/assets/js/search.js"></script>
-	 <!-- 侧边栏折叠插件 -->
-    <script src="/assets/js/docsify-sidebar-collapse.min.js"></script>
+	 <!-- 侧边栏折叠插件（已禁用：左侧菜单仅显示一级分类，无折叠需求） -->
+    <!-- <script src="/assets/js/docsify-sidebar-collapse.min.js"></script> -->
     <script src="/assets/js/docsify-pagination.min.js"></script>
     <script src="/assets/js/zoom-image.js"></script>
     <script src="/assets/js/prism-bash.js"></script>
@@ -173,9 +360,315 @@
 
     <script>
         docsifyBackTop = {
-            logo: '🔝',  // 返回顶部按钮的图标
-            bgColor: '#2096ff'  // 返回顶部按钮的背景颜色
+            logo: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>',
+            size: 44,
+            bottom: 30,
+            right: 5,
+            bgColor: '#2096ff'
         };
+
+        // ===== 独立搜索页面逻辑 =====
+        function initSearchPage() {
+            var input = document.getElementById('search-page-input');
+            var results = document.getElementById('search-page-results');
+            var countEl = document.getElementById('search-page-count');
+
+            if (!input || !results) {
+                return;
+            }
+
+            // 从 localStorage 读取搜索索引
+            function getIndexS() {
+                try {
+                    var data = localStorage.getItem('docsify.search.index');
+                    return data ? JSON.parse(data) : {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            // 转义 HTML
+            function escapeHtml(str) {
+                var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+                return String(str).replace(/[&<>"']/g, function (s) { return map[s]; });
+            }
+
+            // 去除变音符号
+            function ignoreDiacriticalMarks(keyword) {
+                if (keyword && keyword.normalize) {
+                    return keyword.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                }
+                return keyword;
+            }
+
+            // 搜索
+            function doSearch(query) {
+                var indexData = getIndexS();
+                var data = [];
+
+                // 清洗预览文本：去掉markdown链接和路径，保留纯文本
+                function cleanPreview(text) {
+                    var t = text
+                        .replace(/!\[.*?\]\(.*?\)/g, '')       // 去掉图片 ![alt](url)
+                        .replace(/\n?\[([^\]]*)\]\([^)]*\)/g, '') // 去掉markdown链接
+                        .replace(/[^\s]*\.md[^\s]*/g, '')       // 去掉.md文件路径
+                        .replace(/https?:\/\/\S+/g, '')          // 去掉裸URL
+                        .replace(/#\/[\w%\/\-.@]+/g, '')        // 去掉hash路由路径
+                        .replace(/\*\*(.+?)\*\*/g, '$1')         // 去掉粗体 **text**
+                        .replace(/__(.+?)__/g, '$1')             // 去掉粗体 __text__
+                        .replace(/~~(.+?)~~/g, '$1')             // 去掉删除线
+                        .replace(/`(.+?)`/g, '$1')               // 去掉行内代码
+                        .replace(/\n{2,}/g, '\n')                // 合并多余换行
+                        .replace(/\s{2,}/g, ' ');                // 合并多余空白
+                    // 解码 URL 编码的中文字符
+                    if (/%[0-9A-F]{2}/i.test(t)) {
+                        try { t = decodeURIComponent(t); } catch (e) {}
+                    }
+                    return t.trim();
+                }
+
+                Object.keys(indexData).forEach(function (key) {
+                    var pages = indexData[key];
+                    Object.keys(pages).forEach(function (page) {
+                        data.push(pages[page]);
+                    });
+                });
+
+                query = query.trim();
+                if (!query) {
+                    results.innerHTML = '<div class="search-page-empty">😊 输入关键词开始搜索</div>';
+                    countEl.style.display = 'none';
+                    return;
+                }
+
+                var keywords = query.split(/[\s\-，\\/]+/);
+                if (keywords.length !== 1) {
+                    keywords = [].concat(query, keywords);
+                }
+
+                var matchingResults = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    var post = data[i];
+                    var matchesScore = 0;
+                    var resultStr = '';
+                    var postTitle = post.title && post.title.trim();
+                    var postContent = post.body && post.body.trim();
+                    var postUrl = post.slug || '';
+
+                    if (!postTitle) continue;
+
+                    for (var k = 0; k < keywords.length; k++) {
+                        var keyword = keywords[k];
+                        var escapedKw = escapeHtml(ignoreDiacriticalMarks(keyword)).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+                        var regEx = new RegExp(escapedKw, 'gi');
+
+                        // 标题解码 URL 编码（如 %E6%89%B9 → 批）
+                        var decodedTitle = postTitle;
+                        if (/%[0-9A-F]{2}/i.test(postTitle)) {
+                            try { decodedTitle = decodeURIComponent(postTitle); } catch (e) {}
+                        }
+                        var handleTitle = escapeHtml(ignoreDiacriticalMarks(decodedTitle));
+                        var handleContentRaw = postContent ? escapeHtml(ignoreDiacriticalMarks(postContent)) : '';
+                        // 展示用内容先清洗（去掉链接/路径），搜索匹配用原始内容
+                        var handleContent = cleanPreview(handleContentRaw);
+
+                        var indexTitle = postTitle ? handleTitle.search(regEx) : -1;
+                        var indexContent = postContent ? handleContentRaw.search(regEx) : -1;
+
+                        if (indexTitle >= 0 || indexContent >= 0) {
+                            matchesScore += indexTitle >= 0 ? 3 : 2;
+                            if (indexContent < 0) indexContent = 0;
+
+                            var start = indexContent < 11 ? 0 : indexContent - 10;
+                            var end = start === 0 ? 70 : indexContent + keyword.length + 60;
+                            if (postContent && end > postContent.length) {
+                                end = postContent.length;
+                            }
+
+                            // 从原始内容截取片段，再清洗展示
+                            var snippetRaw = handleContentRaw.substring(start, end);
+                            var snippetClean = cleanPreview(snippetRaw);
+                            var matchContent = '...' +
+                                snippetClean.replace(regEx, function (word) {
+                                    return '<em class="search-keyword">' + word + '</em>';
+                                }) + '...';
+
+                            resultStr += matchContent;
+                        }
+                    }
+
+                    if (matchesScore > 0) {
+                        // 只保留文档文章，排除侧边栏导航页面
+                        if (postUrl.indexOf('/sidebar/') !== -1) continue;
+                        matchingResults.push({
+                            title: handleTitle,
+                            content: resultStr,
+                            url: postUrl,
+                            score: matchesScore
+                        });
+                    }
+                }
+
+                // 去重：同一页面（去掉 ?id= 锚点）只保留得分最高的条目
+                var seenBase = {};
+                matchingResults = matchingResults.filter(function (r) {
+                    var baseUrl = r.url.replace(/\?id=.*$/, '');
+                    if (seenBase[baseUrl]) {
+                        if (r.score > seenBase[baseUrl].score) {
+                            seenBase[baseUrl] = r;
+                        }
+                        return false;
+                    }
+                    seenBase[baseUrl] = r;
+                    return true;
+                });
+
+                // 按分数排序
+                matchingResults.sort(function (a, b) { return b.score - a.score; });
+
+                // 渲染结果
+                if (matchingResults.length === 0) {
+                    results.innerHTML = '<div class="search-page-empty">😞 没有找到相关结果</div>';
+                    countEl.style.display = 'none';
+                } else {
+                    countEl.textContent = '共找到 ' + matchingResults.length + ' 条结果';
+                    countEl.style.display = 'inline';
+
+                    var html = '';
+                    for (var j = 0; j < matchingResults.length; j++) {
+                        var r = matchingResults[j];
+                        // 标题高亮关键词
+                        var hlTitle = r.title;
+                        for (var kw = 0; kw < keywords.length; kw++) {
+                            var kwEscaped = keywords[kw].replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+                            var kwReg = new RegExp('(' + kwEscaped + ')', 'gi');
+                            hlTitle = hlTitle.replace(kwReg, '<em class="search-keyword">$1</em>');
+                        }
+                        html += '<div class="search-page-result">' +
+                            '<h3><a href="' + r.url + '" target="_blank">' + hlTitle + '</a></h3>' +
+                            '<p>' + r.content + '</p>' +
+                            '</div>';
+                    }
+                    results.innerHTML = html;
+                }
+            }
+
+            // 显示等待索引的提示
+            var indexData = getIndexS();
+            if (Object.keys(indexData).length === 0) {
+                results.innerHTML = '<div class="search-page-loading">⏳ 正在建立搜索索引，请稍候...</div>';
+
+                // 轮询等待索引建立（搜索插件异步构建，最长等30秒）
+                var attempts = 0;
+                var checkInterval = setInterval(function () {
+                    attempts++;
+                    var data = getIndexS();
+                    if (Object.keys(data).length > 0) {
+                        clearInterval(checkInterval);
+                        results.innerHTML = '<div class="search-page-empty">😊 输入关键词开始搜索</div>';
+                    } else if (attempts >= 60) {
+                        clearInterval(checkInterval);
+                        results.innerHTML = '<div class="search-page-loading">⚠️ 索引建立超时，请刷新页面后重试</div>';
+                    }
+                }, 500);
+            } else {
+                results.innerHTML = '<div class="search-page-empty">😊 输入关键词开始搜索</div>';
+            }
+
+            // 绑定输入事件（防抖）
+            var timer;
+            input.addEventListener('input', function () {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    doSearch(input.value);
+                }, 200);
+            });
+
+            // 从 URL 参数读取预设关键词
+            var hash = window.location.hash;
+            var queryMatch = hash.match(/[?&]s=([^&]*)/);
+            if (queryMatch) {
+                var q = decodeURIComponent(queryMatch[1]);
+                input.value = q;
+                // 等待索引就绪再搜索
+                var retryCount = 0;
+                var searchInterval = setInterval(function () {
+                    retryCount++;
+                    var data = getIndexS();
+                    if (Object.keys(data).length > 0) {
+                        clearInterval(searchInterval);
+                        doSearch(q);
+                    } else if (retryCount >= 30) {
+                        clearInterval(searchInterval);
+                    }
+                }, 500);
+            }
+        }
+
+        // 分类页和搜索页隐藏目录导航（独立于 docsify 回调，确保可靠触发）
+        (function () {
+            function toggleNoToc() {
+                var hash = window.location.hash;
+                if (hash.indexOf('/sidebar/') !== -1 || hash.indexOf('/md/search') !== -1) {
+                    document.body.classList.add('no-toc');
+                } else {
+                    document.body.classList.remove('no-toc');
+                }
+            }
+            toggleNoToc();
+            window.addEventListener('hashchange', toggleNoToc);
+        })();
+
+        // 小屏幕点击内容区自动折叠侧边栏
+        (function () {
+            document.addEventListener('click', function (e) {
+                if (window.innerWidth > 768) return;
+                if (document.body.classList.contains('close')) return;
+                // 点击内容区域（非侧边栏）时折叠
+                var sidebar = document.querySelector('.sidebar');
+                if (sidebar && !sidebar.contains(e.target)) {
+                    var toggleBtn = document.querySelector('.sidebar-toggle');
+                    if (toggleBtn) toggleBtn.click();
+                }
+            });
+        })();
+
+        // 自启动：监听 hash 变化和页面加载，轮询初始化搜索页
+        (function() {
+            function tryInit() {
+                if (window.location.hash.indexOf('/md/search') === -1) return true;
+                var input = document.getElementById('search-page-input');
+                var results = document.getElementById('search-page-results');
+                if (input && results) {
+                    initSearchPage();
+                    return true;
+                }
+                return false;
+            }
+
+            function waitAndInit() {
+                var retries = 0;
+                var timer = setInterval(function() {
+                    retries++;
+                    if (tryInit() || retries >= 60) clearInterval(timer);
+                }, 100);
+            }
+
+            // 页面加载时检查
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(waitAndInit, 200);
+                });
+            } else {
+                setTimeout(waitAndInit, 200);
+            }
+
+            // hash 变化时检查
+            window.addEventListener('hashchange', function() {
+                setTimeout(waitAndInit, 200);
+            });
+        })();
     </script>
 	
 </body>
