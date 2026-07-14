@@ -18,7 +18,7 @@
 
 **哔哩哔哩**：https://space.bilibili.com/591972489
 
-**微信公众号**：![image](https://img.picgo.net/2024/09/22/image0280ff3f68640dae.png)  
+**微信公众号**：https://img.picgo.net/2024/09/22/image0280ff3f68640dae.png
 
 **博客园**：https://www.cnblogs.com/softbangong
 
