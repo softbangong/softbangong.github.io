@@ -14,6 +14,7 @@ import socket
 import base64
 import urllib.request
 import urllib.error
+import urllib.parse
 from pathlib import Path
 
 from PyQt5.QtWidgets import (
@@ -225,6 +226,68 @@ class LogWidget(QTextEdit):
             cursor.deleteChar()
 
         self.moveCursor(QTextCursor.End)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 部署后台线程
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class DeployWorker(QThread):
+    log_signal = pyqtSignal(str, str)
+    progress_signal = pyqtSignal(int, int)
+    done_signal = pyqtSignal(int, int)
+
+    def __init__(self, files, token, repo, branch, msg):
+        super().__init__()
+        self.files = files
+        self.token = token
+        self.repo = repo
+        self.branch = branch
+        self.msg = msg
+
+    def _api(self, method, path, data=None):
+        return ServerApp._api_request_sync(self.token, method, path, data)
+
+    def run(self):
+        uploaded = 0
+        errors = 0
+        total = len(self.files)
+        base_url = f'/repos/{self.repo}/contents'
+
+        for i, (full, rel) in enumerate(self.files):
+            with open(full, 'rb') as f:
+                content = base64.b64encode(f.read()).decode('ascii')
+
+            # URL 编码路径（处理空格和中文）
+            encoded_rel = urllib.parse.quote(rel, safe='')
+
+            # 查远端 SHA
+            status, body = self._api('GET',
+                f'{base_url}/{encoded_rel}?ref={self.branch}')
+            sha = body.get('sha') if status == 200 else None
+
+            req_data = {
+                'message': self.msg,
+                'content': content,
+                'branch': self.branch,
+            }
+            if sha:
+                req_data['sha'] = sha
+
+            status2, body2 = self._api('PUT', f'{base_url}/{encoded_rel}', req_data)
+            if 200 <= status2 < 300:
+                uploaded += 1
+                if uploaded % 10 == 0 or uploaded == total:
+                    self.progress_signal.emit(uploaded, total)
+            else:
+                errors += 1
+                err_msg = body2.get('message', str(status2))
+                self.log_signal.emit(f'✗ {rel}: {err_msg}', "#CE9178")
+
+            # 避免触发 API 频率限制
+            QThread.msleep(50)
+
+        self.done_signal.emit(uploaded, errors)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -521,6 +584,12 @@ class ServerApp(QMainWindow):
         self.token_input.setEchoMode(QLineEdit.Password)
         self.token_input.setPlaceholderText("ghp_xxxxxxxxxxxxxxxxxxxx")
         token_layout.addWidget(self.token_input)
+        self.token_show = QPushButton("👁 显示")
+        self.token_show.setFixedWidth(55)
+        self.token_show.setCursor(Qt.PointingHandCursor)
+        self.token_show.setCheckable(True)
+        self.token_show.clicked.connect(self._toggle_token)
+        token_layout.addWidget(self.token_show)
         layout.addWidget(token_group)
 
         # 仓库 + 分支
@@ -579,6 +648,16 @@ class ServerApp(QMainWindow):
         self.deploy_status.setStyleSheet("color: #7F8C8D; font-size: 9pt;")
         layout.addWidget(self.deploy_status)
 
+    def _toggle_token(self):
+        if self.token_show.isChecked():
+            self.token_input.setEchoMode(QLineEdit.Normal)
+            self.token_show.setText("👁 隐藏")
+            self.token_show.setStyleSheet("background:#E67E22; color:white; border:none; border-radius:3px;")
+        else:
+            self.token_input.setEchoMode(QLineEdit.Password)
+            self.token_show.setText("👁 显示")
+            self.token_show.setStyleSheet("")
+
     def _save_deploy_config(self):
         self.cfg['github_token'] = self.token_input.text().strip()
         self.cfg['github_repo'] = self.repo_input.text().strip()
@@ -586,9 +665,9 @@ class ServerApp(QMainWindow):
         save_config(self.cfg)
         self.deploy_log.log("设置已保存", "#4EC9B0")
 
-    def _api_request(self, method, path, data=None):
-        """调用 GitHub API，返回 (status, body_json)"""
-        token = self.cfg.get('github_token', '')
+    @staticmethod
+    def _api_request_sync(token, method, path, data=None):
+        """调用 GitHub API，返回 (status, body_json)（可在线程中安全调用）"""
         url = f'https://api.github.com{path}'
         headers = {
             'Authorization': f'Bearer {token}',
@@ -616,11 +695,9 @@ class ServerApp(QMainWindow):
             QMessageBox.critical(self, "错误", "请填写 Token 和仓库地址")
             return
 
-        # 保存到配置
         self._save_deploy_config()
 
         folder = self.cfg.get('folder', SCRIPT_DIR)
-        base_url = f'/repos/{repo}/contents'
 
         # 收集文件
         files = []
@@ -637,62 +714,26 @@ class ServerApp(QMainWindow):
         self.deploy_btn.setEnabled(False)
         self.deploy_log.log(f'>>> 开始部署 ({len(files)} 个文件)...', "#569CD6")
         self.deploy_log.log(f'仓库: {repo}  分支: {branch}', "#D4D4D4")
+        self.deploy_status.setText(f'准备上传 {len(files)} 个文件...')
 
-        self._uploaded = 0
-        self._errors = 0
-        self._total = len(files)
+        self._upload_worker = DeployWorker(files, token, repo, branch, msg)
+        self._upload_worker.log_signal.connect(
+            lambda m, c: self.deploy_log.log(m, c))
+        self._upload_worker.progress_signal.connect(
+            lambda u, t: self.deploy_status.setText(f'进度: {u}/{t}'))
+        self._upload_worker.done_signal.connect(self._on_deploy_done)
+        self._upload_worker.start()
 
-        def do_upload(file_list, idx):
-            if idx >= len(file_list):
-                self._on_deploy_done()
-                return
-
-            full, rel = file_list[idx]
-            with open(full, 'rb') as f:
-                content = base64.b64encode(f.read()).decode('ascii')
-
-            # 先查远端文件 SHA（存在则覆盖）
-            def after_check():
-                status, body = self._api_request('GET',
-                    f'{base_url}/{rel}?ref={branch}')
-                sha = body.get('sha') if status == 200 else None
-
-                req_data = {
-                    'message': msg,
-                    'content': content,
-                    'branch': branch,
-                }
-                if sha:
-                    req_data['sha'] = sha
-
-                status2, body2 = self._api_request('PUT', f'{base_url}/{rel}', req_data)
-                if 200 <= status2 < 300:
-                    self._uploaded += 1
-                    if self._uploaded % 10 == 0 or self._uploaded == self._total:
-                        self.deploy_status.setText(
-                            f'进度: {self._uploaded}/{self._total}')
-                else:
-                    self._errors += 1
-                    err_msg = body2.get('message', str(status2))
-                    self.deploy_log.log(f'✗ {rel}: {err_msg}', "#CE9178")
-
-                # 下一秒继续下一个
-                QTimer.singleShot(200, lambda: do_upload(file_list, idx + 1))
-
-            after_check()
-
-        # 启动上传
-        QTimer.singleShot(0, lambda: do_upload(files, 0))
-
-    def _on_deploy_done(self):
+    def _on_deploy_done(self, uploaded, errors):
         self.deploy_btn.setEnabled(True)
+        total = uploaded + errors
         self.deploy_status.setText(
-            f'完成: {self._uploaded} 成功 / {self._errors} 失败 (共 {self._total})')
-        if self._errors == 0:
-            self.deploy_log.log(f'✅ 部署完成! ({self._uploaded} 个文件)', "#4EC9B0")
+            f'完成: {uploaded} 成功 / {errors} 失败 (共 {total})')
+        if errors == 0:
+            self.deploy_log.log(f'✅ 部署完成! ({uploaded} 个文件)', "#4EC9B0")
         else:
             self.deploy_log.log(
-                f'⚠ 部署完成 ({self._uploaded} 成功, {self._errors} 失败)', "#CE9178")
+                f'⚠ 部署完成 ({uploaded} 成功, {errors} 失败)', "#CE9178")
 
     # ── 页面切换 ──────────────────────────────────────────────────────────
 
