@@ -337,9 +337,9 @@
             nativeEmoji: true,
             notFoundPage: false, //显示默认的 "404 - 未找到" 消息：
 
-            // 别名：/sidebar/_sidebar.md 重定向到根目录
+            // 别名：所有子路径下的 _sidebar.md 重定向到根目录
             alias: {
-                '/sidebar/_sidebar.md': '/_sidebar.md',
+                '/(.+)/_sidebar.md': '/_sidebar.md',
             },
             
             toc: {
