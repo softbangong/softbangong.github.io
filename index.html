@@ -739,9 +739,16 @@
             });
         })();
 
-        // 侧边栏「📁 项目目录」折叠/展开（全局函数，供 doneEach 等回调调用）
+        // 侧边栏「📁 项目目录」折叠/展开（事件委托，不受 DOM 替换影响）
+        document.addEventListener('click', function (e) {
+            var toggle = e.target.closest('.sidebar-catalog-toggle');
+            if (toggle) {
+                e.preventDefault();
+                toggle.parentElement.classList.toggle('sidebar-catalog-collapsed');
+            }
+        });
+
         function initCatalogToggle() {
-            // 防止重复初始化（已存在 span 则跳过）
             if (document.querySelector('.sidebar-catalog-toggle')) return;
             var topLis = document.querySelectorAll('.sidebar-nav > ul > li');
             for (var i = 0; i < topLis.length; i++) {
@@ -753,22 +760,17 @@
                     span.className = 'sidebar-catalog-toggle';
                     li.replaceChild(span, txt);
                     li.classList.add('sidebar-catalog-item');
-                    span.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        this.parentElement.classList.toggle('sidebar-catalog-collapsed');
-                    });
                     break;
                 }
             }
         }
-        // 首次加载 + hash 切换时初始化
+        setTimeout(initCatalogToggle, 400);
         window.addEventListener('DOMContentLoaded', function () {
             setTimeout(initCatalogToggle, 400);
         });
         window.addEventListener('hashchange', function () {
             setTimeout(initCatalogToggle, 400);
         });
-        setTimeout(initCatalogToggle, 400);
     </script>
 	
 </body>
