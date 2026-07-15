@@ -330,12 +330,17 @@
             auto2top: true,  // 切换页面后是否自动回到顶部
             coverpage: false,
             onlyCover: true,  // 首页只显示封面
-            loadSidebar: '_sidebar.md', // 显式指定文件名（相对于文档根目录）
+            loadSidebar: true, // 启用侧边栏
             maxLevel: 0,  // 最大显示层级
             subMaxLevel:0,
             mergeNavbar: true,  // 导航栏在小屏幕上合并
             nativeEmoji: true,
             notFoundPage: false, //显示默认的 "404 - 未找到" 消息：
+
+            // 别名：/sidebar/_sidebar.md 重定向到根目录
+            alias: {
+                '/sidebar/_sidebar.md': '/_sidebar.md',
+            },
             
             toc: {
                 scope: '.markdown-section',
@@ -353,7 +358,7 @@
                 nextText: 'NEXT',
                 crossChapter: true
             },
-            basePath: '/',
+            basePath: '.',
             footer: {
                 copy: '<span>极致办公  解放你的双手</span>',
                 auth: 'by 极致办公',
