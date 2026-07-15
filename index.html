@@ -197,6 +197,11 @@
         }
 
         /* 项目目录折叠 */
+        /* 📁 项目目录 — 始终加粗（CSS 级别，不等 JS） */
+        .sidebar-nav > ul > li:nth-child(3),
+        .sidebar-nav .sidebar-catalog-item {
+            font-weight: bold !important;
+        }
         .sidebar-nav .sidebar-catalog-toggle {
             cursor: pointer;
             user-select: none;
@@ -323,8 +328,21 @@
     <div id="app"></div>
     
     <script>
+        // ==================== 🎨 自定义文案（集中管理，修改这里即可） ====================
+        var SITE = {
+            brandName: '极致办公 | 极致',               // 网站标题
+            footerCopy: '极致办公  解放你的双手',         // 页脚标语
+            footerAuth: 'by 极致办公',                   // 页脚署名
+            tocTitle:   '【目录导航】',                   // 右侧目录标题
+            searchPlaceholder: '🔍 输入关键词搜索本站内容 ',
+            searchNoData: '😞 暂无结果 ',
+            prevText:   '上一篇',
+            nextText:   '下一篇'
+        };
+        // ==================== 🎨 自定义文案结束 ====================
+
         window.$docsify = {
-            name: '极致办公 | 极致',
+            name: SITE.brandName,
             nameLink: '/#/README',
             repo: 'http://doc.softbangong.top',
             auto2top: true,  // 切换页面后是否自动回到顶部
@@ -345,23 +363,23 @@
             toc: {
                 scope: '.markdown-section',
                 headings: 'h1, h2, h3, h4, h5, h6',
-                title: '【目录导航】',
+                title: SITE.tocTitle,
             },
             search: {
                 paths: 'auto',
-                placeholder: '🔍 输入关键词搜索本站内容 ',
-                noData: '😞 No Results! ',
+                placeholder: SITE.searchPlaceholder,
+                noData: SITE.searchNoData,
                 depth: 6
             },
             pagination: {
-                previousText: 'PREVIOUS',
-                nextText: 'NEXT',
+                previousText: SITE.prevText,
+                nextText: SITE.nextText,
                 crossChapter: true
             },
             basePath: '.',
             footer: {
-                copy: '<span>极致办公  解放你的双手</span>',
-                auth: 'by 极致办公',
+                copy: '<span>' + SITE.footerCopy + '</span>',
+                auth: SITE.footerAuth,
                 pre: '<hr/>',
                 style: 'text-align: center;',
             },
