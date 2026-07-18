@@ -7,11 +7,21 @@ $uri = $_SERVER['REQUEST_URI'];
 $fullPath = urldecode(parse_url($uri, PHP_URL_PATH));
 $ext = pathinfo($fullPath, PATHINFO_EXTENSION);
 
+// 有扩展名的请求（.css .js .html .png 等）→ 交给 PHP 直接返回静态文件
+if ($ext !== '') return false;
+
 // 路由函数：给定路径尝试映射到 .html 文件，成功返回 true
 $tryRoute = function($path) {
-    if ($path === '/' || $path === '') return false;
-    $ext = pathinfo($path, PATHINFO_EXTENSION);
-    if ($ext !== '') return false;
+    // 首页特殊处理：/ → index.html（PHP 内置服务器不会自动映射）
+    if ($path === '/' || $path === '') {
+        $htmlFile = __DIR__ . '/index.html';
+        if (is_file($htmlFile)) {
+            header('Content-Type: text/html; charset=utf-8');
+            readfile($htmlFile);
+            return true;
+        }
+        return false;
+    }
     // 先试 /path.html
     $htmlFile = __DIR__ . $path . '.html';
     if (is_file($htmlFile)) {
@@ -43,6 +53,3 @@ $nf = __DIR__ . '/404.html';
 if (is_file($nf)) { readfile($nf); return; }
 echo '404 Not Found';
 return;
-
-// 情况2：路径有扩展名 → 交给 PHP 返回真实文件
-return false;
