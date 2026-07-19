@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as r,a as s}from"./chunks/framework.DvCHLeYD.js";const l=JSON.parse('{"title":"🔍 搜索","description":"","frontmatter":{},"headers":[],"relativePath":"md/search.md","filePath":"md/search.md"}'),c={name:"md/search.md"};function i(d,a,n,o,p,_){return t(),r("div",null,[...a[0]||(a[0]=[s("",2)])])}const u=e(c,[["render",i]]);export{l as __pageData,u as default};
