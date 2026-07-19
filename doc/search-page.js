@@ -7,10 +7,21 @@
   var dataLoaded = false;
   var dataLoading = false;
 
+  // 动态获取 base 路径
+  function getBase() {
+    var baseEl = document.querySelector('meta[name="vitepress-base"]');
+    if (baseEl) return baseEl.content;
+    // 从当前路径推断（/doc/xxx → /doc/）
+    var path = window.location.pathname;
+    var m = path.match(/^(\/[^/]+\/)/);
+    return m ? m[1] : '/';
+  }
+
   // ========== 多时机触发初始化 ==========
   function tryInit() {
     if (initialized) return;
-    var container = document.getElementById('search-page-app');
+    // 兼容两种容器 ID
+    var container = document.getElementById('search-page-app') || document.getElementById('search-page-container');
     if (!container) return;
     initialized = true;
     initSearch(container);
@@ -18,18 +29,19 @@
 
   // 初次加载
   document.addEventListener('DOMContentLoaded', tryInit);
-  // SPA 路由切换（VitePress 会用 pushState）
-  var _push = history.pushState;
-  history.pushState = function() {
-    _push.apply(this, arguments);
+  // SPA 路由切换时通过 DOM 变化检测（避免劫持 pushState）
+  var observer = new MutationObserver(function() {
     initialized = false;
     setTimeout(tryInit, 100);
-    setTimeout(tryInit, 300);
-  };
-  window.addEventListener('popstate', function() {
-    initialized = false;
-    setTimeout(tryInit, 100);
+    setTimeout(tryInit, 400);
   });
+  // 观测 VitePress 内容区变化
+  var contentEl = document.querySelector('.VPContent');
+  if (contentEl) {
+    observer.observe(contentEl, { childList: true, subtree: true });
+  } else {
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
   // 兜底轮询
   setTimeout(tryInit, 50);
   setTimeout(tryInit, 400);
@@ -39,8 +51,12 @@
     // 加载数据（只加载一次）
     if (!dataLoading && !dataLoaded) {
       dataLoading = true;
-      fetch('/doc/search-data.json')
-        .then(function(res) { return res.json(); })
+      var base = getBase();
+      fetch(base + 'search-data.json')
+        .then(function(res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
         .then(function(data) {
           allData = data;
           dataLoaded = true;
@@ -48,7 +64,7 @@
         })
         .catch(function(e) {
           console.error('搜索数据加载失败:', e);
-          updateCount(0);
+          updateCount(-1);
         });
     }
 
