@@ -39,7 +39,7 @@
     // 加载数据（只加载一次）
     if (!dataLoading && !dataLoaded) {
       dataLoading = true;
-      fetch('/search-data.json')
+      fetch('/doc/search-data.json')
         .then(function(res) { return res.json(); })
         .then(function(data) {
           allData = data;
