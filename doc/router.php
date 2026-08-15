@@ -7,7 +7,8 @@
  *   php -S localhost:8080 -t /path/to/dist router.php
  */
 $uri = $_SERVER['REQUEST_URI'];
-$fullPath = urldecode(parse_url($uri, PHP_URL_PATH));
+// 路径解码用 rawurldecode：urldecode 会把文件名中的 '+' 误解码为空格
+$fullPath = rawurldecode(parse_url($uri, PHP_URL_PATH));
 $ext = pathinfo($fullPath, PATHINFO_EXTENSION);
 
 // 文档根目录（PHP -t 参数指定的目录，不是 router.php 所在目录）
@@ -84,8 +85,10 @@ $tryRoute = function($path) use ($root) {
 if ($tryRoute($fullPath)) return;
 
 // 2) 剥离首级子路径后尝试（如 /doc/md/xxx → /md/xxx，支持子路径部署）
+//    剥离后为 '/'（如 /doc/ → /）时也要尝试根首页
 $stripped = preg_replace('#^/[^/]+#', '', $fullPath);
 if ($stripped && $stripped !== '/' && $tryRoute($stripped)) return;
+if ($stripped === '/' && $tryRoute('/')) return;
 
 // 映射失败 → 404
 http_response_code(404);
