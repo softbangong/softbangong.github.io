@@ -1,1 +1,0 @@
-import{_ as e,o as r,c as t,a as o}from"./chunks/framework.Dj-71DD2.js";const f=JSON.parse('{"title":"极致办公 | 办公批处理程序","description":"","frontmatter":{},"headers":[],"relativePath":"guide.md","filePath":"guide.md"}'),h={name:"guide.md"};function n(i,a,d,l,s,p){return r(),t("div",null,[...a[0]||(a[0]=[o("",47)])])}const m=e(h,[["render",n]]);export{f as __pageData,m as default};
