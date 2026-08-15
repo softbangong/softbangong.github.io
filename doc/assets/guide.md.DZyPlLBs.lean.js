@@ -1,0 +1,1 @@
+import{_ as e,o as r,c as t,a5 as o}from"./chunks/framework.Cooo9kuv.js";const b=JSON.parse('{"title":"极致办公 | 办公批处理程序","description":"","frontmatter":{},"headers":[],"relativePath":"guide.md","filePath":"guide.md"}'),h={name:"guide.md"};function n(l,a,i,d,s,p){return r(),t("div",null,[...a[0]||(a[0]=[o("",47)])])}const f=e(h,[["render",n]]);export{b as __pageData,f as default};

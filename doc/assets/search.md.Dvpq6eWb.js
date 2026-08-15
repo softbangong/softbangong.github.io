@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as a}from"./chunks/framework.Cooo9kuv.js";const m=JSON.parse('{"title":"搜索文档","description":"","frontmatter":{"title":"搜索文档"},"headers":[],"relativePath":"search.md","filePath":"search.md"}'),r={name:"search.md"};function s(c,o,n,i,p,_){return t(),a("div")}const f=e(r,[["render",s]]);export{m as __pageData,f as default};
