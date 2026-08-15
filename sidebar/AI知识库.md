@@ -1,3 +1,0 @@
-- [📄 AI工具及大模型箱整理-202508](/md/AI知识库/AI工具及大模型箱整理-202508.md)
-- [📄 【AI提问实例】使用deepseek等AI工具零基础写python代码，读取excell实现多层级文件夹创建的实例](/md/AI知识库/【AI提问实例】使用deepseek等AI工具零基础写python代码，读取excell实现多层级文件夹创建的实例.md)
-- [📄 【起步式】从python环境配置到使用AI写出第一个python程序（python版本3.86）](/md/AI知识库/【起步式】从python环境配置到使用AI写出第一个python程序（python版本3.86）.md)
