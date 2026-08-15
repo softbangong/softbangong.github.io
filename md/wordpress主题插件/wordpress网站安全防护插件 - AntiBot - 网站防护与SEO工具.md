@@ -1,0 +1,261 @@
+---
+标题: "wordpress网站安全防护插件 – AntiBot – 网站防护与SEO工具"
+日期: 2026-07-12
+修改日期: 2026-07-13
+作者: "softbangong"
+状态: publish
+分类: ["wordpress主题插件"]
+标签: ["Canvas", "Sitemap", "WebGL", "WordPress", "反爬虫", "安全防护", "机器人检测", "浏览器指纹", "自动化拦截", "蜘蛛管理"]
+---
+# AntiBot - 网站防护与SEO工具   
+
+> WordPress 反自动化采集与安全防护插件。提供服务端特征检测与客户端浏览器环境验证双重防护，内置拦截日志、蜘蛛管理、访客记录与 Sitemap 生成功能。
+   
+
+**版本**：v1.5.1  
+**适配**：WordPress 5.8+  
+**PHP**：>= 7.2  
+**作者**：softbangong  
+**授权**：不限制网站数量，下载安装后永久免费使用   
+
+## 插件简介   
+
+![](https://www.softbangong.com/wp-content/uploads/2026/07/image-19.png)   
+
+AntiBot 是一款面向 WordPress 的网站安全防护插件，专门检测并阻止自动化采集、爬虫工具、模拟浏览器等恶意访问行为。   
+
+插件采用服务端特征检测与客户端 JS 环境验证双层架构：服务端检查 User-Agent、请求头完整性、代理特征、Sec-Fetch 安全头等多维度信号；客户端通过注入 JS 脚本收集浏览器指纹、WebGL 渲染器、Canvas 指纹、行为模式等 19 项检测数据，二者交叉验证，准确识别 Selenium、Puppeteer、Playwright 等自动化工具。   
+
+同时提供 Apache .htaccess 前置拦截能力，在请求到达 PHP 之前即可拦截恶意流量，大幅节省服务器资源。内置拦截日志查看器、搜索引擎蜘蛛分类管理、访客记录追踪和 XML Sitemap 生成器，覆盖安全防护与 SEO 两大场景。   
+
+## 功能特性   
+
+### 26 大防护模块，灵活开关   
+
+![](https://www.softbangong.com/wp-content/uploads/2026/07/image-20.png)   
+
+插件内置 26 个可独立开关的防护模块，每个模块均可在管理后台单独启用或关闭，满足不同场景的防护需求：   
+
+**模块总开关** — 一键开启或关闭所有防护模块，关闭后仅保留日志记录功能   
+
+**.htaccess 前置拦截** — Apache 环境下在请求到达 PHP 之前拦截恶意流量，直接返回 403，大幅降低服务器负载   
+
+**JS 挑战验证** — 向可疑请求展示 JS 验证页面，通过 6 步浏览器环境检测（指纹采集、WebGL 渲染器检测、Canvas 指纹、Plugins/MimeTypes 检测、requestAnimationFrame 时序检测、Chrome API 完整性检测），只有真实浏览器能通过验证   
+
+**调试模式（仅记录不拦截）** — 开启后只记录日志不实际拦截，方便上线前观察误判情况   
+
+**代理访问检测** — 检测 X-Forwarded-For 等代理头特征，匹配云服务商数据中心 IP 段，支持自定义代理 IP 范围   
+
+**User-Agent 检测** — 检测 cURL、Scrapy、Python-Requests 等自动化工具的 UA 特征，内置默认黑名单并支持自定义关键词   
+
+**Chrome 版本合理性检测** — 校验 UA 中 Chrome 版本号是否在合理范围（<1 或 >999 为伪造），检测版本与操作系统的兼容性（如 Chrome 110+ 不再支持 Windows 7/8）   
+
+**UA 伪装检测** — 检测 UA 中多个浏览器标识冲突（如同时包含 Chrome+Firefox+Edge）、vendor 与声称浏览器不匹配、productSub 异常、mobile/desktop platform 矛盾等伪装行为   
+
+**请求头完整性检测** — 检查 Accept、Accept-Language、Accept-Encoding 等标准请求头是否携带，缺失即判定为可疑   
+
+**Accept-Language 检测** — 检测请求的语言偏好，支持封禁特定语言或地区组合，拦截非目标区域流量   
+
+**Sec-Fetch 安全头检测** — 检测 Sec-Fetch-Site、Sec-Fetch-Mode、Sec-Fetch-Dest 等安全请求头，Selenium 控制的 Chrome 不会发送这些头   
+
+**ChromeDriver 标记检测** — 检测 window 和 document 中的 cdc*/wdc* 注入变量，以及 Cookie 中的 cdc 前缀标记   
+
+**客户端环境评分** — 基于浏览器 JS 上报的 19 项指纹检测数据（webdriver 状态、WebGL 参数、Plugins/MimeTypes 数量、Canvas 反锯齿等），评分 >= 3 触发拦截   
+
+**高级浏览器内核检测** — 检测 Plugins、MimeTypes、Chrome 对象深度属性、requestAnimationFrame 时序精度，区分真实浏览器与模拟器，识别浏览器品牌与版本   
+
+**行为模式检测** — 采集鼠标移动轨迹、滚轮事件、触摸事件、焦点事件和路径连续性，利用人类浏览的不可预测性与机器人规律性差异进行判别   
+
+**设备唯一 ID** — 基于 Canvas 指纹、WebGL 渲染器、AudioContext 等生成设备唯一标识，支持跨浏览器同设备关联追踪   
+
+**同 IP 段多指纹检测** — C 段 IP 内短时间内出现大量不同浏览器指纹时触发拦截，有效识别代理池或 IP 池   
+
+**可疑参数模式检测** — 检测 URL 中包含双斜杠、路径遍历、SQL 注入关键词、XSS 关键词等恶意模式   
+
+**IP 频率限制** — 单 IP 在设定时间窗口内的请求次数超过阈值时自动拦截   
+
+**IP 黑/白名单管理** — 支持 IP、CIDR 格式和 IP 范围的批量管理   
+
+**路径访问与端点防护** — 保护 wp-login.php、xmlrpc.php、wp-admin 等敏感入口，30 秒内多个不同 IP 扫描同一路径时自动拦截   
+
+**跨 IP 指纹自动封禁** — 同一浏览器指纹在不同 IP 上出现时自动将指纹加入黑名单   
+
+**浏览器指纹黑名单** — 已标记为恶意的浏览器指纹自动进入黑名单，下次访问直接拦截   
+
+**拦截提示与手动解除** — 被拦截用户可在 403 页面通过随机位置的按钮申请解除限制，需通过浏览器行为验证（鼠标移动+最短交互时间）   
+
+**系统维护** — 一键清空拦截日志、自动拉黑日志、访客记录，清理缓存与临时文件   
+
+**短时批量挑战检测** — 检测短时间内触发大量 JS 挑战的可疑行为   
+
+**URL 白名单检测** — 将正常页面 URL 加入白名单，命中白名单规则的请求跳过防护检测直接放行   
+
+### JavaScript 客户端环境检测   
+
+插件在前台页面注入客户端检测脚本，收集以下维度的浏览器环境信息：   
+
+- WebDriver 属性检测：navigator.webdriver 标记、属性描述符完整性、原型链篡改检测  
+- WebGL 深度指纹：GPU 型号与厂商、渲染器参数（最大纹理/顶点属性/着色器精度）、扩展列表  
+- Canvas 渲染指纹：同一图案在不同 GPU 上输出的像素级差异  
+- 插件与 MIME 类型：数量、关键插件（Chrome PDF Viewer、Native Client）完整性  
+- Chrome API 对象：chrome.runtime、chrome.loadTimes、chrome.app 等属性完整性  
+- requestAnimationFrame 时序精度：正常浏览器约 16.67ms 间隔，自动化工具时钟异常  
+- 屏幕信息一致性：色深与像素深度、devicePixelRatio 范围、外部与内部尺寸比例  
+- 虚拟化环境检测：WebGL 渲染器识别 SwiftShader、llvmpipe、VirtualBox、VMware、QEMU、Hyper-V 等  
+- ChromeDriver CDC 变量与 Cookie 检测  
+- PhantomJS、NightmareJS、HeadlessChrome UA 特征  
+- 行为模式：鼠标移动熵值、轨迹总距离、交互间隔标准差   
+
+### 搜索引擎蜘蛛管理   
+
+![](https://www.softbangong.com/wp-content/uploads/2026/07/0b022268-ef70-43ee-9fc7-b670911291a3.png)   
+
+插件内置主流搜索引擎和 AI 爬虫的 UA 识别库，支持按分类管理蜘蛛白名单：   
+
+| 分类 | 包含类型 | 说明 |
+| --- | ---- | --- |
+| 搜索引擎 | Googlebot、Baiduspider、Bingbot、YandexBot 等 | 主流搜索引擎蜘蛛，默认放行 |
+| 社交媒体 | Facebook、Twitter、LinkedIn 等 | 社交媒体爬虫 |
+| AI 爬虫 | GPTBot、ClaudeBot、Bytespider 等 | AI 训练数据采集爬虫，可单独禁用 |
+| SEO/分析 | AhrefsBot、SemrushBot、DotBot 等 | SEO 工具和网站分析爬虫 |
+| 存档 | archive.org 等 | 网页存档服务 |
+| 存档 | archive.org 等 | 网页存档服务 |
+   
+
+每个蜘蛛均可独立开启或关闭放行策略，已拉黑的蜘蛛访问时会自动记录日志。   
+
+### 拦截日志与数据分析   
+
+- 拦截日志：记录每一次拦截事件的 IP、UA、URL、请求方法、拦截原因和时间  
+- 自动拉黑日志：记录被跨 IP 指纹封禁和指纹黑名单自动拦截的事件  
+- 蜘蛛爬取记录：记录已放行搜索引擎蜘蛛的访问轨迹  
+- 访客记录：记录通过验证的正常访客，默认不合并同一访客的多条记录   
+
+![](https://www.softbangong.com/wp-content/uploads/2026/07/image-21.png)   
+
+- 统计概览：管理后台顶部展示总拦截次数、今日拦截、活跃 IP 数、防护状态、自动拉黑指纹数等关键指标  
+- 日志支持按时间、IP、状态等条件筛选和搜索，JSONL 流式存储确保大文件下的快速分页读取   
+
+### XML Sitemap 生成器   
+
+![](https://www.softbangong.com/wp-content/uploads/2026/07/c70fc875-ca8a-472e-bbf6-5c3a09b58acd.png)   
+
+- 支持生成文章、页面、分类、标签和首页的 XML Sitemap，提供独立文件或拆分模式两种输出方式  
+- 可设置自动生成间隔，通过 WordPress Cron 定时任务后台生成，无需每次请求触发  
+- 文章发布或更新时自动增量更新 Sitemap，保持搜索引擎数据同步  
+- Sitemap 和 Sitemap Index 文件直接写入网站根目录，方便提交至搜索引擎站长平台   
+
+### 403 拦截页面与手动解除   
+
+被拦截访客将看到友好的 403 提示页面，页面上以随机位置出现解除限制按钮：   
+
+- 按钮延迟 3 秒后显示，防止自动化脚本直接点击  
+- 需在按钮显示后等待至少 2 秒的真人交互时间才可点击  
+- 需检测到鼠标移动或触摸事件后才放行，防止 headless 浏览器直接调用  
+- 支持中英双语，根据浏览器 Accept-Language 自动切换  
+- 管理后台提供独立开关，可随时禁用解除按钮   
+
+### 中英双语界面   
+
+插件管理后台完整支持中文和英文两种界面语言，提供三种切换模式：   
+
+- 自动（跟随系统）：根据浏览器语言或 WordPress 站点语言自动选择  
+- 中文：强制使用中文界面  
+- 英文：强制使用英文界面   
+
+基于内部翻译数组实现，无需额外语言包文件，切换即时生效。   
+
+## 使用说明   
+
+### 第一步：安装插件   
+
+将 antibot 文件夹上传至 WordPress 站点的 wp-content/plugins/ 目录，进入 WordPress 后台「插件」页面，找到 AntiBot 并点击启用。   
+
+### 第二步：配置防护模块   
+
+进入后台「AntiBot」管理页面，在「防护设置」Tab 中逐一配置各模块：   
+
+- 1. 总开关：确认处于启用状态  
+- 根据实际需求开启或关闭各子模块。建议首次使用时先开启「调试模式（仅记录不拦截）」，观察 1-2 天确认无误报后再关闭调试模式正式拦截  
+- Apache 用户建议开启「.htaccess 前置拦截」，拦截效率更高且不消耗 PHP 资源  
+- 各模块的子配置项（如 UA 黑名单关键词、必需请求头列表、代理 IP 段等）均有默认值，首次使用无需修改   
+
+### 第三步：配置蜘蛛白名单   
+
+进入「搜索引擎蜘蛛」Tab，查看各类蜘蛛的放行状态：   
+
+- 默认所有搜索引擎蜘蛛（Google、Baidu、Bing 等）已开启放行  
+- AI 爬虫和 SEO 分析工具可根据需要单独禁用  
+- 支持添加自定义蜘蛛 UA 到相应分类   
+
+### 第四步：配置 Sitemap   
+
+进入「Sitemap」Tab，设置生成参数：   
+
+- 勾选需包含的页面类型（首页、文章、分类、标签、页面）  
+- 设置自动生成间隔（0 为关闭）  
+- 点击「生成 Sitemap」手动生成，或等待 Cron 定时任务自动执行  
+- 生成的 sitemap.xml 和 sitemap*cate**.xml 文件位于网站根目录   
+
+### 第五步：查看拦截日志   
+
+进入「拦截日志」Tab，查看实时拦截数据：   
+
+- 页面顶部展示统计概览卡片  
+- 支持按状态筛选（已拦截、已挑战、已验证等）  
+- 支持关键词搜索（IP、UA、URL）  
+- 点击「详情」按钮查看单条拦截的完整信息，包含浏览器指纹、地理位置、挑战通过记录等   
+
+## 注意事项   
+
+- 本插件依赖客户端 JS 脚本进行环境检测，如果访客浏览器禁用了 JavaScript，可能被误判为可疑请求。建议保持调试模式运行 1-2 天后再正式启用  
+- Apache .htaccess 前置拦截需要服务器开启 mod_rewrite 模块，Nginx 用户无法使用此功能  
+- 插件会自动在 .htaccess 中插入标记区块（# BEGIN AntiBot PreBlock Rules … # END AntiBot PreBlock Rules），不会覆盖您已有的自定义规则  
+- 停用插件时，.htaccess 中 AntiBot 的规则区块不会自动清理，如需清除请在停用后手动删除相应区块  
+- JSON 日志文件存储在插件目录的 cache/logs/ 下，文件大小达到 500KB 或记录数超过 5000 条时自动截断  
+- 使用 Cloudflare CDN 时，插件自动从 CF-Connecting-IP 头获取真实客户端 IP  
+- Sitemap 生成的 XML 文件位于网站根目录，请确保该目录对 PHP 进程有写入权限      
+
+   
+
+## 反馈与支持   
+
+- 作者：softbangong  
+- 作者网站：softbangong.top  
+- 作者网站：softbangong.com  
+- 邮箱：[yunjuliangpin@163.com](mailto:yunjuliangpin@163.com)  
+- 邮箱：[softbangong@gmail.com](mailto:softbangong@gmail.com)   
+
+## 更新日志   
+
+### v1.5.1（2026-07-12）   
+
+- 新增 26 大防护模块，支持独立开关与子配置项实时展开折叠  
+- 新增 .htaccess 前置拦截，Apache 环境下在请求到达 PHP 前拦截恶意流量  
+- 新增 JS 挑战验证，6 步浏览器环境检测区分真实浏览器与自动化工具  
+- 新增客户端环境评分，基于 19 项指纹数据综合判定，评分 >= 3 触发拦截  
+- 新增高级浏览器内核检测，WebGL 渲染器参数 + Chrome API 深度检查  
+- 新增行为模式检测，鼠标轨迹熵值分析区分人类与机器人  
+- 新增设备唯一 ID，基于 Canvas/WebGL/AudioContext 多维度指纹生成  
+- 新增同 IP 段多指纹检测，有效识别代理池与 IP 池  
+- 新增跨 IP 指纹自动封禁和浏览器指纹黑名单  
+- 新增路径访问与端点防护，保护 wp-login、xmlrpc、wp-admin 等敏感入口  
+- 新增短时批量挑战检测  
+- 新增 URL 白名单检测，命中白名单的请求直接放行  
+- 新增 Chrome 版本合理性检测，校验版本号范围及与操作系统兼容性  
+- 新增 UA 伪装检测，识别多浏览器标识冲突、vendor 不匹配、platform 矛盾等  
+- 新增 Accept-Language 检测，封禁特定语言或地区组合  
+- 新增 Sec-Fetch 安全头检测和 ChromeDriver 标记检测  
+- 新增 403 拦截页面手动解除限制，随机位置按钮 + 行为验证双重保障  
+- 新增拦截日志、蜘蛛爬取记录、访客记录、自动拉黑日志四大日志体系  
+- 新增 XML Sitemap 生成器，支持独立文件与拆分模式，Cron 定时自动生成  
+- 新增搜索引擎蜘蛛分类管理，6 大分类各蜘蛛独立开关  
+- 新增中英双语界面，支持自动/中文/英文三种切换模式  
+- 新增 Cloudflare CDN 兼容，自动获取 CF-Connecting-IP 真实 IP  
+- 新增 IP 频率限制、IP 黑/白名单管理、代理访问检测  
+- 新增调试模式（仅记录不拦截），适合上线前观察误判情况  
+- 新增系统维护功能，一键清理各类日志与缓存
+
+---
+
+**程序下载链接：** <https://www.softbangong.com/3006.html>
